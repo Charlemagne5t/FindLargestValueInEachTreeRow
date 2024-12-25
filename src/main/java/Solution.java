@@ -1,31 +1,30 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
-public class Solution {
+class Solution {
     public List<Integer> largestValues(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
+
+        Deque<TreeNode> q = new ArrayDeque<>();
+        List<Integer> res = new ArrayList<>();
+        if(root == null) {
+            return res;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            int rowMax = Integer.MIN_VALUE;
-            for (int i = 0; i < size; i++) {
-                TreeNode current = queue.poll();
-                rowMax = Math.max(rowMax, current.val);
-                if (current.left != null) {
-                    queue.add(current.left);
+        q.offer(root);
+
+        while(!q.isEmpty()){
+            int size = q.size();
+            int max = Integer.MIN_VALUE;
+            for(int i = 0; i < size; i++) {
+                TreeNode cur = q.poll();
+                max = Math.max(max, cur.val);
+                if(cur.left != null) {
+                    q.offer(cur.left);
                 }
-                if (current.right != null) {
-                    queue.add(current.right);
+                if(cur.right != null) {
+                    q.offer(cur.right);
                 }
             }
-            result.add(rowMax);
+            res.add(max);
         }
-        return result;x
+        return res;
     }
 }
